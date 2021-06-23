@@ -1,0 +1,46 @@
+<html>
+
+	<head>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/photo-sphere-viewer.min.css"/>
+
+		<script src="https://cdn.jsdelivr.net/npm/three/build/three.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/uevent@2/browser.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4.2.1/dist/photo-sphere-viewer.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4.2.1/dist/plugins/gyroscope.js"></script>
+
+	</head>
+	<body>
+		
+		<input type="button" onClick="toggleGyro()" value="Gyro" style="height: 50px; z-index: 2; position: absolute">
+		
+
+		<div id="photosphere" style="margin: 0px; width: 100%; heigth: 100%; z-index: -1"/>
+
+
+
+		 <script>
+			var viewer = new PhotoSphereViewer.Viewer({
+				panorama: 'https://photo-sphere-viewer-data.netlify.app/assets/sphere.jpg',
+				container: 'photosphere',
+				caption: 'Parc national du Mercantour <b>&copy; Damien Sorel</b>',
+				loadingImg: 'https://photo-sphere-viewer.js.org/assets/photosphere-logo.gif',
+				defaultLat: 0.3,
+				touchmoveTwoFingers: true,
+				mousewheelCtrlKey: true,
+				plugins: [PhotoSphereViewer.GyroscopePlugin,],
+				navbar: ["autorotate", "fullscreen", "gyroscope"],
+			});
+
+			function toggleGyro() {
+				gyro = viewer.getPlugin(PhotoSphereViewer.GyroscopePlugin);
+				if (gyro.isEnabled()) {
+					gyro.stop();
+				} else {
+					gyro.start().then(() => {alert("Gyro on!");}).catch((e) => alert("Gyro failed: " + e));
+				}
+			}
+		 </script>
+
+
+	</body>
+</html>
